@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { Textarea } from "@/components/ui/textarea";
 import { authClient } from "@/lib/auth-client";
-import { trpc } from "@/utils/trpc";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
@@ -16,43 +15,14 @@ export const Route = createFileRoute("/")({
 });
 
 function HomeComponent() {
-  const { data: session } = authClient.useSession();
-
-  const healthCheck = useQuery(trpc.healthCheck.queryOptions());
-  const privateData = useQuery(trpc.privateData.queryOptions());
-
   return (
-    <div className="container mx-auto max-w-3xl px-4 py-2">
-      <div className="grid gap-6">
-        <section className="rounded-lg border p-4">
-          <h2 className="mb-2 font-medium">Welcome {session?.user.name}</h2>
-          <p className="mb-4 text-muted-foreground text-sm">
-            You are successfully authenticated!
-          </p>
-          <div className="space-y-2">
-            <div>
-              <strong>Private Data:</strong> {privateData.data?.message}
-            </div>
-            <div>
-              <strong>User Email:</strong> {session?.user.email}
-            </div>
-          </div>
-        </section>
-        <section className="rounded-lg border p-4">
-          <h2 className="mb-2 font-medium">API Status</h2>
-          <div className="flex items-center gap-2">
-            <div
-              className={`h-2 w-2 rounded-full ${healthCheck.data ? "bg-green-500" : "bg-red-500"}`}
-            />
-            <span className="text-muted-foreground text-sm">
-              {healthCheck.isLoading
-                ? "Checking..."
-                : healthCheck.data
-                  ? "Connected"
-                  : "Disconnected"}
-            </span>
-          </div>
-        </section>
+    <div className="flex h-svh flex-col items-center justify-center">
+      <div className="flex w-full max-w-3xl flex-col gap-4">
+        <h1 className="font-bold text-4xl">
+          Change the{" "}
+          <span className="font-serif text-primary italic">Ambiance...</span>
+        </h1>
+        <Textarea autoFocus className="resize-none shadow-2xl" />
       </div>
     </div>
   );
