@@ -1,4 +1,4 @@
-import { sounds } from "@ambiance/sounds";
+import { sounds, themes } from "@ambiance/sounds";
 import OpenAI from "openai";
 import { z } from "zod";
 import { protectedProcedure, publicProcedure, router } from "../lib/trpc";
@@ -9,18 +9,24 @@ const openai = new OpenAI({
 });
 
 const SYSTEM_PROMPT = `
-You are a helpful assistant that can play sounds.
-You will be given a message and you will need to play the sound that best matches the message.
-The user can tell a story, or ask directly for a sound.
-Do not make up any sounds, only choose from the list.
-Do not answer the user's message, only play the sound.
-Do not answer any words, only play the sound.
+You are a helpful assistant that can play sounds and change the theme of the website.
+You will be given a message and you will need to pick the best sound and theme that best matches the message.
+The user can tell a story, or ask directly for a sound and theme.
+Always pick BOTH a sound and a theme, so always call both functions.
+Do not make up any sounds or themes, only choose from the lists.
+Do not answer the user's message, only play the sound and change the theme.
+Do not answer any words, only play the sound and change the theme.
 
 Here is a list of sounds to choose from, formatted as "- [soundId] soundName (soundDescription)":
 ${Object.entries(sounds)
   .map(
     ([soundId, sound]) => `- [${soundId}] ${sound.name} (${sound.description})`,
   )
+  .join("\n")}
+
+Here is a list of themes to choose from, formatted as "- [themeId] themeName":
+${Object.entries(themes)
+  .map(([themeId, theme]) => `- [${themeId}] ${theme.label}`)
   .join("\n")}
 `;
 
@@ -54,6 +60,24 @@ export const appRouter = router({
                     },
                   },
                   required: ["soundId"],
+                },
+              },
+            },
+            {
+              type: "function",
+              function: {
+                name: "changeTheme",
+                description: "Change the theme of the website",
+                parameters: {
+                  type: "object",
+                  properties: {
+                    themeId: {
+                      type: "string",
+                      enum: Object.keys(themes),
+                      description: "The ID of the theme to change to",
+                    },
+                  },
+                  required: ["themeId"],
                 },
               },
             },
