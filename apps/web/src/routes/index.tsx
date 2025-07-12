@@ -24,27 +24,18 @@ function HomeComponent() {
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const { mutate: getSound } = useMutation(
-    trpc.getSound.mutationOptions({
+  const { mutate: askAi } = useMutation(
+    trpc.askAi.mutationOptions({
       onSuccess: (data) => {
         console.log(data);
-        data.tool_calls?.forEach((toolCall) => {
-          if (toolCall.function.name === "playSound") {
-            const { soundId } = JSON.parse(toolCall.function.arguments);
-            console.log(soundId);
-            const sound = sounds[soundId];
-            if (sound && audioRef.current) {
-              audioRef.current.src = sound.url;
-              audioRef.current.load();
-              audioRef.current.play();
-            }
-          }
-          if (toolCall.function.name === "changeTheme") {
-            const { themeId } = JSON.parse(toolCall.function.arguments);
-            console.log(themeId);
-            setTheme(themeId);
-          }
-        });
+        if (data.soundId && audioRef.current) {
+          audioRef.current.src = sounds[data.soundId].url;
+          audioRef.current.load();
+          audioRef.current.play();
+        }
+        if (data.themeId) {
+          setTheme(data.themeId);
+        }
       },
     }),
   );
@@ -78,7 +69,7 @@ function HomeComponent() {
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
-              getSound({ message });
+              askAi({ message });
             }
           }}
         />

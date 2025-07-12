@@ -3,6 +3,8 @@ export type ThemeId = keyof typeof themes;
 export const themes = {
   "modern-minimal": {
     label: "Modern Minimal",
+    description:
+      "Clean and minimal design with crisp blue accents and subtle gray tones for a contemporary, professional look.",
     styles: {
       light: {
         background: "#ffffff",
@@ -82,6 +84,8 @@ export const themes = {
 
   "violet-bloom": {
     label: "Violet Bloom",
+    description:
+      "Elegant purple and violet tones with soft curves and generous spacing, creating a sophisticated floral-inspired aesthetic.",
     createdAt: "2025-06-26",
     styles: {
       light: {
@@ -181,6 +185,8 @@ export const themes = {
 
   "t3-chat": {
     label: "T3 Chat",
+    description:
+      "Warm pink and magenta palette with soft gradients, designed for comfortable chat interfaces and social applications.",
     createdAt: "2025-04-19",
     styles: {
       light: {
@@ -257,6 +263,8 @@ export const themes = {
 
   twitter: {
     label: "Twitter",
+    description:
+      "Iconic blue and white theme inspired by Twitter's classic design, perfect for social media and communication apps.",
     createdAt: "2025-04-24",
     styles: {
       light: {
@@ -343,6 +351,8 @@ export const themes = {
 
   "mocha-mousse": {
     label: "Mocha Mousse",
+    description:
+      "Rich coffee and chocolate brown tones with creamy accents, evoking the warmth and comfort of a cozy café.",
     createdAt: "2025-04-24",
     styles: {
       light: {
@@ -429,6 +439,8 @@ export const themes = {
 
   bubblegum: {
     label: "Bubblegum",
+    description:
+      "Playful pink and cyan palette with bold shadows, creating a fun, energetic vibe reminiscent of childhood candy.",
     createdAt: "2025-04-18",
     styles: {
       light: {
@@ -518,6 +530,8 @@ export const themes = {
 
   "amethyst-haze": {
     label: "Amethyst Haze",
+    description:
+      "Soft purple and lavender hues with subtle shadows, creating a dreamy, ethereal atmosphere like morning mist.",
     createdAt: "2025-05-08",
     styles: {
       light: {
@@ -605,6 +619,8 @@ export const themes = {
 
   notebook: {
     label: "Notebook",
+    description:
+      "Warm paper tones with handwritten-style fonts and subtle textures, mimicking the feel of a classic notebook.",
     createdAt: "2025-05-10",
     styles: {
       light: {
@@ -704,6 +720,8 @@ export const themes = {
 
   "doom-64": {
     label: "Doom 64",
+    description:
+      "Bold, industrial theme with stark contrasts and no rounded corners, inspired by classic 90s gaming aesthetics.",
     createdAt: "2025-04-28",
     styles: {
       light: {
@@ -805,6 +823,8 @@ export const themes = {
 
   catppuccin: {
     label: "Catppuccin",
+    description:
+      "Popular pastel theme with soft purples, blues, and warm accents, beloved by developers for its gentle, eye-friendly palette.",
     createdAt: "2025-04-18",
     styles: {
       light: {
@@ -890,6 +910,8 @@ export const themes = {
 
   graphite: {
     label: "Graphite",
+    description:
+      "Sophisticated monochrome theme with various shades of gray, perfect for professional and minimalist interfaces.",
     createdAt: "2025-04-17",
     styles: {
       light: {
@@ -978,6 +1000,8 @@ export const themes = {
 
   perpetuity: {
     label: "Perpetuity",
+    description:
+      "Futuristic teal and cyan theme with monospace fonts throughout, evoking terminal interfaces and cyberpunk aesthetics.",
     createdAt: "2025-04-01",
     styles: {
       light: {
@@ -1072,6 +1096,8 @@ export const themes = {
   },
   "kodama-grove": {
     label: "Kodama Grove",
+    description:
+      "Earthy forest theme with warm browns and mossy greens, inspired by Japanese forest spirits and natural harmony.",
     styles: {
       light: {
         background: "#e4d7b0",
@@ -1156,6 +1182,8 @@ export const themes = {
 
   "cosmic-night": {
     label: "Cosmic Night",
+    description:
+      "Deep space-inspired theme with rich purples and blues, creating a mysterious and celestial atmosphere.",
     createdAt: "2025-04-04",
     styles: {
       light: {
@@ -1242,6 +1270,8 @@ export const themes = {
 
   tangerine: {
     label: "Tangerine",
+    description:
+      "Vibrant orange and blue theme with generous border radius, radiating energy and warmth like a summer sunset.",
     createdAt: "2025-04-09",
     styles: {
       light: {
@@ -1327,6 +1357,8 @@ export const themes = {
 
   "quantum-rose": {
     label: "Quantum Rose",
+    description:
+      "Futuristic pink and magenta theme with sci-fi inspired colors, blending romance with high-tech aesthetics.",
     createdAt: "2025-04-03",
     styles: {
       light: {
@@ -1416,6 +1448,8 @@ export const themes = {
 
   nature: {
     label: "Nature",
+    description:
+      "Fresh green and earth tones inspired by forests and meadows, bringing the tranquility of nature to digital interfaces.",
     styles: {
       light: {
         background: "#f8f5f0",
@@ -1495,6 +1529,8 @@ export const themes = {
 
   "bold-tech": {
     label: "Bold Tech",
+    description:
+      "Striking purple and blue theme with bold shadows and modern fonts, perfect for tech-forward applications.",
     styles: {
       light: {
         background: "#ffffff",
@@ -1580,6 +1616,8 @@ export const themes = {
 
   "elegant-luxury": {
     label: "Elegant Luxury",
+    description:
+      "Sophisticated burgundy and gold palette with serif fonts, evoking classic elegance and timeless luxury.",
     styles: {
       light: {
         background: "#faf7f5",
@@ -1665,6 +1703,8 @@ export const themes = {
 
   "amber-minimal": {
     label: "Amber Minimal",
+    description:
+      "Warm amber and orange tones with clean lines and minimal styling, balancing warmth with modern simplicity.",
     createdAt: "2025-04-27",
     styles: {
       light: {
@@ -1752,6 +1792,8 @@ export const themes = {
 
   supabase: {
     label: "Supabase",
+    description:
+      "Clean green and white theme inspired by Supabase branding, perfect for modern database and backend applications.",
     createdAt: "2025-04-27",
     styles: {
       light: {
@@ -1839,6 +1881,8 @@ export const themes = {
 
   "neo-brutalism": {
     label: "Neo Brutalism",
+    description:
+      "Bold, stark design with sharp edges, high contrast colors, and hard shadows, embracing raw digital brutalism.",
     styles: {
       light: {
         background: "#ffffff",
@@ -1923,6 +1967,8 @@ export const themes = {
 
   "solar-dusk": {
     label: "Solar Dusk",
+    description:
+      "Warm sunset colors with orange and amber tones, capturing the golden hour glow of twilight skies.",
     createdAt: "2025-04-12",
     styles: {
       light: {
@@ -2010,6 +2056,8 @@ export const themes = {
 
   claymorphism: {
     label: "Claymorphism",
+    description:
+      "Soft, clay-like design with rounded corners and subtle textures, creating a tactile, organic user experience.",
     styles: {
       light: {
         background: "#e7e5e4",
@@ -2096,6 +2144,8 @@ export const themes = {
 
   cyberpunk: {
     label: "Cyberpunk",
+    description:
+      "Neon-bright colors with hot pink and electric blue accents, channeling the energy of futuristic cyberpunk aesthetics.",
     styles: {
       light: {
         background: "#f8f9fa",
@@ -2179,6 +2229,8 @@ export const themes = {
   },
   "pastel-dreams": {
     label: "Pastel Dreams",
+    description:
+      "Soft, dreamy pastels with gentle purples and pinks, creating a whimsical, cloud-like atmosphere.",
     styles: {
       light: {
         background: "#f7f3f9",
@@ -2264,6 +2316,8 @@ export const themes = {
 
   "clean-slate": {
     label: "Clean Slate",
+    description:
+      "Pure and professional theme with blue accents on neutral backgrounds, perfect for business applications.",
     styles: {
       light: {
         background: "#f8fafc",
@@ -2349,6 +2403,8 @@ export const themes = {
 
   caffeine: {
     label: "Caffeine",
+    description:
+      "Rich coffee and cream tones with warm browns and beiges, perfect for cozy productivity applications.",
     styles: {
       light: {
         background: "#f9f9f9",
@@ -2424,6 +2480,8 @@ export const themes = {
   },
   "ocean-breeze": {
     label: "Ocean Breeze",
+    description:
+      "Cool blues and greens with gentle gradients, evoking the refreshing feeling of coastal waters and sea air.",
     styles: {
       light: {
         background: "#f0f8ff",
@@ -2508,6 +2566,8 @@ export const themes = {
   },
   "retro-arcade": {
     label: "Retro Arcade",
+    description:
+      "Vibrant retro gaming colors with bold contrasts, bringing back the excitement of classic arcade cabinets.",
     styles: {
       light: {
         background: "#fdf6e3",
@@ -2592,6 +2652,8 @@ export const themes = {
 
   "midnight-bloom": {
     label: "Midnight Bloom",
+    description:
+      "Deep night tones with purple and blue accents, like flowers blooming under moonlight with elegant typography.",
     styles: {
       light: {
         background: "#f9f9f9",
@@ -2676,6 +2738,8 @@ export const themes = {
   },
   candyland: {
     label: "Candyland",
+    description:
+      "Bright, cheerful colors with pink, blue, and yellow accents, creating a joyful, candy-inspired wonderland.",
     styles: {
       light: {
         background: "#f7f9fa",
@@ -2753,6 +2817,8 @@ export const themes = {
   },
   "northern-lights": {
     label: "Northern Lights",
+    description:
+      "Mystical aurora-inspired theme with greens and blues, capturing the ethereal beauty of arctic skies.",
     styles: {
       light: {
         background: "#f9f9fa",
@@ -2831,6 +2897,8 @@ export const themes = {
   },
   "vintage-paper": {
     label: "Vintage Paper",
+    description:
+      "Aged paper tones with sepia and brown hues, evoking the timeless appeal of antique documents and old books.",
     styles: {
       light: {
         background: "#f5f1e6",
@@ -2915,6 +2983,8 @@ export const themes = {
   },
   "sunset-horizon": {
     label: "Sunset Horizon",
+    description:
+      "Warm sunset gradients with orange and pink hues, capturing the serene beauty of evening skies.",
     styles: {
       light: {
         background: "#fff9f5",
@@ -3000,6 +3070,8 @@ export const themes = {
 
   "starry-night": {
     label: "Starry Night",
+    description:
+      "Deep blues and golds inspired by Van Gogh's masterpiece, with elegant serif fonts and celestial charm.",
     createdAt: "2025-04-16",
     styles: {
       light: {
@@ -3078,6 +3150,8 @@ export const themes = {
 
   claude: {
     label: "Claude",
+    description:
+      "Warm, earthy tones with orange accents and cream backgrounds, inspired by Claude AI's friendly, approachable design.",
     styles: {
       light: {
         background: "#faf9f5",
@@ -3153,6 +3227,8 @@ export const themes = {
 
   vercel: {
     label: "Vercel",
+    description:
+      "Pure black and white theme with Geist fonts, embodying Vercel's minimalist and modern development aesthetic.",
     createdAt: "2025-04-13",
     styles: {
       light: {
@@ -3242,6 +3318,8 @@ export const themes = {
 
   mono: {
     label: "Mono",
+    description:
+      "Strict monochrome design with Geist Mono fonts throughout, creating a uniform, terminal-inspired experience.",
     createdAt: "2025-04-20",
     styles: {
       light: {
@@ -3326,6 +3404,8 @@ export const themes = {
   },
   "soft-pop": {
     label: "Soft Pop",
+    description:
+      "Vibrant yet soft colors with rounded edges and playful gradients, balancing energy with gentle aesthetics.",
     createdAt: "2025-07-08",
     styles: {
       light: {

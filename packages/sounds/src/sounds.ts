@@ -1,10 +1,6 @@
-export interface Sound {
-  url: string;
-  name: string;
-  description: string;
-}
+export type SoundId = keyof typeof sounds;
 
-export const sounds: Record<string, Sound> = {
+export const sounds = {
   goodhaven: {
     url: "/sounds/439_Goodhaven.mp3",
     name: "Goodhaven",
