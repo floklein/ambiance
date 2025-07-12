@@ -23,7 +23,7 @@ export default function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">{session.user.name}</Button>
+        <Button variant="ghost">{session.user.name}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
