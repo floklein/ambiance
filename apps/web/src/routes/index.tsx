@@ -75,11 +75,11 @@ function HomeComponent() {
         </style>
       )}
       <div className="flex w-full max-w-3xl flex-col gap-4">
-        <h1 className="font-bold text-2xl">
-          Tell your story,
+        <h1 className="text-2xl">
+          Tell your <span className="font-bold">story</span>,
           <br />
-          <span className="font-serif text-3xl text-primary italic">
-            and open your ears...
+          <span className="font-serif text-4xl text-primary italic">
+            open your ears...
           </span>
         </h1>
         <Textarea
@@ -94,7 +94,7 @@ function HomeComponent() {
             }
           }}
           maxLength={200}
-          placeholder="Begin to write your story here..."
+          placeholder="Begin to write your story..."
         />
         <ol className="flex flex-col gap-2 px-3 font-mono text-sm">
           {history.toReversed().map((item, index) => (
@@ -106,7 +106,7 @@ function HomeComponent() {
         </ol>
       </div>
       <div className="fixed right-0 bottom-0 left-0 flex items-center justify-center p-4">
-        <audio ref={audioRef} controls />
+        <audio ref={audioRef} controls controlsList="nodownload" />
       </div>
     </div>
   );
