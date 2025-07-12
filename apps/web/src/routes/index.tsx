@@ -37,7 +37,7 @@ function HomeComponent() {
       onSuccess: (data) => {
         console.log(data);
         if (data.soundId && audioRef.current) {
-          audioRef.current.src = sounds[data.soundId].url;
+          audioRef.current.src = `${import.meta.env.VITE_SERVER_URL}${sounds[data.soundId].url}`;
           audioRef.current.load();
           audioRef.current.play();
         }
