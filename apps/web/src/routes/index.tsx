@@ -1,4 +1,4 @@
-import { type Sound, sounds } from "@ambiance/sounds";
+import { sounds, type ThemeId, themes } from "@ambiance/sounds";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useRef, useState } from "react";
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
 
 function HomeComponent() {
   const [message, setMessage] = useState("");
-  const [sound, setSound] = useState<Sound | null>(null);
+  const [theme, setTheme] = useState<ThemeId | null>(null);
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -31,14 +31,18 @@ function HomeComponent() {
         data.tool_calls?.forEach((toolCall) => {
           if (toolCall.function.name === "playSound") {
             const { soundId } = JSON.parse(toolCall.function.arguments);
+            console.log(soundId);
             const sound = sounds[soundId];
-            console.log(sound);
-            if (sound) {
-              setSound(sound);
-              setTimeout(() => {
-                audioRef.current?.play();
-              }, 100);
+            if (sound && audioRef.current) {
+              audioRef.current.src = sound.url;
+              audioRef.current.load();
+              audioRef.current.play();
             }
+          }
+          if (toolCall.function.name === "changeTheme") {
+            const { themeId } = JSON.parse(toolCall.function.arguments);
+            console.log(themeId);
+            setTheme(themeId);
           }
         });
       },
@@ -47,6 +51,20 @@ function HomeComponent() {
 
   return (
     <div className="flex h-svh flex-col items-center justify-center">
+      {theme && (
+        <style>
+          {`:root {
+          ${Object.entries(themes[theme].styles.light)
+            .map(([key, value]) => `--${key}: ${value};`)
+            .join("\n")}
+        }
+        .dark {
+          ${Object.entries(themes[theme].styles.dark)
+            .map(([key, value]) => `--${key}: ${value};`)
+            .join("\n")}
+        }`}
+        </style>
+      )}
       <div className="flex w-full max-w-3xl flex-col gap-4">
         <h1 className="font-bold text-4xl">
           Change the{" "}
@@ -54,7 +72,7 @@ function HomeComponent() {
         </h1>
         <Textarea
           autoFocus
-          className="resize-none shadow-2xl"
+          className="resize-none"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
@@ -64,12 +82,8 @@ function HomeComponent() {
             }
           }}
         />
+        <audio ref={audioRef} controls />
       </div>
-      {sound && (
-        <audio ref={audioRef} controls>
-          <source src={sound.url} />
-        </audio>
-      )}
     </div>
   );
 }
