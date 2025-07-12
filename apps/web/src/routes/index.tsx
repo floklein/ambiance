@@ -1,3 +1,4 @@
+import { sounds } from "@ambiance/sounds";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Textarea } from "@/components/ui/textarea";
 import { authClient } from "@/lib/auth-client";
@@ -24,6 +25,9 @@ function HomeComponent() {
         </h1>
         <Textarea autoFocus className="resize-none shadow-2xl" />
       </div>
+      <audio controls>
+        <source src={sounds.goodhaven.url} />
+      </audio>
     </div>
   );
 }
