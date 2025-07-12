@@ -74,14 +74,13 @@ function HomeComponent() {
         }`}
         </style>
       )}
-      <div className="flex w-full max-w-3xl flex-col gap-4">
-        <h1 className="text-2xl">
-          Tell your <span className="font-bold">story</span>,
-          <br />
-          <span className="font-serif text-4xl text-primary italic">
-            open your ears...
-          </span>
-        </h1>
+      <div className="flex w-full max-w-3xl flex-col gap-8">
+        <div>
+          <h3 className="font-sans text-2xl">Tell your story,</h3>
+          <h2 className="font-serif text-4xl text-primary">
+            feel the <span className="italic">ambiance</span>...
+          </h2>
+        </div>
         <Textarea
           autoFocus
           className="resize-none font-mono"
