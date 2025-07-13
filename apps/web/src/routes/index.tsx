@@ -2,8 +2,11 @@ import { type SoundId, sounds, type ThemeId, themes } from "@ambiance/sounds";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Fragment, useRef, useState } from "react";
+import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { authClient } from "@/lib/auth-client";
+import { cn } from "@/lib/utils";
 import { trpc } from "@/utils/trpc";
 
 export const Route = createFileRoute("/")({
@@ -32,28 +35,39 @@ function HomeComponent() {
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const { mutate: askAi } = useMutation(
+  const { mutate: askAi, isPending } = useMutation(
     trpc.askAi.mutationOptions({
       onSuccess: (data) => {
-        console.log(data);
         if (data.soundId && audioRef.current) {
+          console.log("Sound:", sounds[data.soundId].title);
           audioRef.current.src = `https://sounds.tabletopaudio.com/${sounds[data.soundId].mp3}`;
           audioRef.current.load();
           audioRef.current.play();
         }
         if (data.themeId) {
+          console.log("Theme:", themes[data.themeId].label);
           setTheme(data.themeId);
         }
+      },
+      onMutate: (data) => {
+        setMessage("");
         setHistory((prev) => [
           ...prev,
           {
             id: crypto.randomUUID(),
-            message,
-            soundId: data.soundId,
-            themeId: data.themeId,
+            message: data.messages.at(-1) ?? "",
+            soundId: null,
+            themeId: null,
           },
         ]);
-        setMessage("");
+        return { history, message };
+      },
+      onError: (error, _variables, context) => {
+        if (context) {
+          setMessage(context.message);
+          setHistory(context.history);
+        }
+        toast.error(error.message);
       },
     }),
   );
@@ -94,6 +108,7 @@ function HomeComponent() {
               });
             }
           }}
+          disabled={isPending}
           maxLength={200}
           placeholder="Begin to write your story..."
         />
@@ -107,7 +122,13 @@ function HomeComponent() {
         </ol>
       </div>
       <div className="fixed right-0 bottom-0 left-0 flex items-center justify-center p-4">
-        <audio ref={audioRef} controls controlsList="nodownload" />
+        {isPending && <Skeleton className="h-[54px] w-[300px] rounded-full" />}
+        <audio
+          ref={audioRef}
+          controls
+          controlsList="nodownload"
+          className={cn(isPending && "hidden")}
+        />
       </div>
     </div>
   );

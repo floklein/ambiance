@@ -48,91 +48,86 @@ export const appRouter = router({
       }),
     )
     .mutation(async ({ input }) => {
-      try {
-        const completion = await openai.chat.completions.create({
-          model: "openai/gpt-4.1-nano",
-          tools: [
-            {
-              type: "function",
-              function: {
-                name: "playSound",
-                description: "Play a sound",
-                parameters: {
-                  type: "object",
-                  properties: {
-                    soundId: {
-                      type: "string",
-                      enum: Object.entries(sounds)
-                        .filter(
-                          ([_, sound]) =>
-                            !("disabled" in sound) || !sound.disabled,
-                        )
-                        .map(([soundId]) => soundId),
-                      description: "The ID of the sound to play",
-                    },
+      const completion = await openai.chat.completions.create({
+        model: "openai/gpt-4.1-nano",
+        tools: [
+          {
+            type: "function",
+            function: {
+              name: "playSound",
+              description: "Play a sound",
+              parameters: {
+                type: "object",
+                properties: {
+                  soundId: {
+                    type: "string",
+                    enum: Object.entries(sounds)
+                      .filter(
+                        ([_, sound]) =>
+                          !("disabled" in sound) || !sound.disabled,
+                      )
+                      .map(([soundId]) => soundId),
+                    description: "The ID of the sound to play",
                   },
-                  required: ["soundId"],
                 },
+                required: ["soundId"],
               },
             },
-            {
-              type: "function",
-              function: {
-                name: "changeTheme",
-                description: "Change the theme of the website",
-                parameters: {
-                  type: "object",
-                  properties: {
-                    themeId: {
-                      type: "string",
-                      enum: Object.keys(themes),
-                      description: "The ID of the theme to change to",
-                    },
+          },
+          {
+            type: "function",
+            function: {
+              name: "changeTheme",
+              description: "Change the theme of the website",
+              parameters: {
+                type: "object",
+                properties: {
+                  themeId: {
+                    type: "string",
+                    enum: Object.keys(themes),
+                    description: "The ID of the theme to change to",
                   },
-                  required: ["themeId"],
                 },
+                required: ["themeId"],
               },
             },
-          ],
-          messages: [
-            {
-              role: "system",
-              content: SYSTEM_PROMPT,
-            },
-            ...input.messages.map((message) => ({
-              role: "user" as const,
-              name: "user",
-              content: message,
-            })),
-          ],
-        });
-        const result: { soundId: SoundId | null; themeId: ThemeId | null } = {
-          soundId: null,
-          themeId: null,
-        };
-        completion.choices[0].message.tool_calls?.forEach((toolCall) => {
-          if (toolCall.function.name === "playSound") {
-            const { soundId } = JSON.parse(toolCall.function.arguments);
-            if (!sounds[soundId as SoundId]) {
-              console.error(`Sound ${soundId} not found`);
-            } else {
-              result.soundId = soundId;
-            }
+          },
+        ],
+        messages: [
+          {
+            role: "system",
+            content: SYSTEM_PROMPT,
+          },
+          ...input.messages.map((message) => ({
+            role: "user" as const,
+            name: "user",
+            content: message,
+          })),
+        ],
+      });
+      const result: { soundId: SoundId | null; themeId: ThemeId | null } = {
+        soundId: null,
+        themeId: null,
+      };
+      completion.choices[0].message.tool_calls?.forEach((toolCall) => {
+        if (toolCall.function.name === "playSound") {
+          const { soundId } = JSON.parse(toolCall.function.arguments);
+          if (!sounds[soundId as SoundId]) {
+            console.error(`Sound ${soundId} not found`);
+          } else {
+            result.soundId = soundId;
           }
-          if (toolCall.function.name === "changeTheme") {
-            const { themeId } = JSON.parse(toolCall.function.arguments);
-            if (!themes[themeId as ThemeId]) {
-              console.error(`Theme ${themeId} not found`);
-            } else {
-              result.themeId = themeId;
-            }
+        }
+        if (toolCall.function.name === "changeTheme") {
+          const { themeId } = JSON.parse(toolCall.function.arguments);
+          if (!themes[themeId as ThemeId]) {
+            console.error(`Theme ${themeId} not found`);
+          } else {
+            result.themeId = themeId;
           }
-        });
-        return result;
-      } catch (error) {
-        console.error(JSON.stringify(error, null, 2));
-        throw error;
-      }
+        }
+      });
+      return result;
     }),
 });
 
