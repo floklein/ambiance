@@ -49,7 +49,7 @@ function RootComponent() {
     <>
       <HeadContent />
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <div>
+        <div className="flex h-svh flex-col">
           <Header />
           {isFetching ? <Loader /> : <Outlet />}
         </div>

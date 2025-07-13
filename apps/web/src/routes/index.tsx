@@ -73,7 +73,7 @@ function HomeComponent() {
   );
 
   return (
-    <div className="flex h-svh flex-col items-center justify-center">
+    <div className="grid grow grid-cols-1 grid-rows-[1fr_auto] items-center justify-items-center">
       {theme && (
         <style>
           {`:root {
@@ -88,7 +88,7 @@ function HomeComponent() {
         }`}
         </style>
       )}
-      <div className="flex w-full max-w-3xl flex-col gap-8">
+      <div className="flex w-full max-w-3xl flex-col gap-8 p-4 sm:p-8">
         <div>
           <h3 className="font-sans text-2xl">Tell your story,</h3>
           <h2 className="font-serif text-4xl text-primary">
@@ -121,7 +121,7 @@ function HomeComponent() {
           ))}
         </ol>
       </div>
-      <div className="fixed right-0 bottom-0 left-0 flex items-center justify-center p-4">
+      <div className="flex items-center justify-center p-4">
         {isPending && <Skeleton className="h-[54px] w-[300px] rounded-full" />}
         <audio
           ref={audioRef}

@@ -1,10 +1,13 @@
 import { useNavigate } from "@tanstack/react-router";
 import { LogOut } from "lucide-react";
+import { type Theme, useTheme } from "@/components/theme-provider";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -14,6 +17,7 @@ import { Button } from "./ui/button";
 
 export default function UserMenu() {
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
   const { data: session, isPending } = authClient.useSession();
 
   if (isPending || !session) {
@@ -47,6 +51,15 @@ export default function UserMenu() {
             </div>
           </div>
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuRadioGroup
+          value={theme}
+          onValueChange={(value) => setTheme(value as Theme)}
+        >
+          <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
