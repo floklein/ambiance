@@ -1,4 +1,4 @@
-import { sounds } from "./sounds";
+import sounds from "./sounds.json";
 
 const BASE_URL = "https://sounds.tabletopaudio.com";
 
@@ -31,7 +31,7 @@ export async function pingAllSounds() {
     ]),
   );
 
-  console.log(JSON.stringify(updatedSounds, null, 2));
+  Bun.write("./sounds.json", JSON.stringify(updatedSounds, null, 2));
 }
 
 pingAllSounds();

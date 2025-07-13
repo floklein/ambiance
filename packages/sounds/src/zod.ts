@@ -37,6 +37,14 @@ export const assistantMessageSchema = z.object({
 });
 export type AssistantMessage = z.infer<typeof assistantMessageSchema>;
 
+export const toolMessageSchema = z.object({
+  role: z.literal("tool"),
+  tool_call_id: z.string(),
+  content: z.string(),
+});
+export type ToolMessage = z.infer<typeof toolMessageSchema>;
+
 export const messagesSchema = z.array(
-  z.union([userMessageSchema, assistantMessageSchema]),
+  z.union([userMessageSchema, assistantMessageSchema, toolMessageSchema]),
 );
+export type Messages = z.infer<typeof messagesSchema>;

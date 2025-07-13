@@ -1,10 +1,4 @@
-import {
-  type AssistantMessage,
-  sounds,
-  type ThemeId,
-  themes,
-  type UserMessage,
-} from "@ambiance/sounds";
+import { type Messages, sounds, type ThemeId, themes } from "@ambiance/sounds";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Fragment, useRef, useState } from "react";
@@ -32,15 +26,15 @@ export const Route = createFileRoute("/")({
 function HomeComponent() {
   const [message, setMessage] = useState("");
   const [theme, setTheme] = useState<ThemeId | null>(null);
-  const [history, setHistory] = useState<(UserMessage | AssistantMessage)[]>(
-    [],
-  );
+  const [history, setHistory] = useState<Messages>([]);
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const { mutate: askAi, isPending } = useMutation(
     trpc.askAi.mutationOptions({
       onSuccess: (data) => {
+        setHistory(data.history);
+        console.log(data.history);
         if (data.soundId && audioRef.current) {
           console.log("Sound:", sounds[data.soundId].title);
           audioRef.current.src = `https://sounds.tabletopaudio.com/${sounds[data.soundId].mp3}`;
@@ -88,6 +82,10 @@ function HomeComponent() {
         role: "user",
         content: [
           {
+            type: "text",
+            text: "Use this audio file to pick the sound and UI theme.",
+          },
+          {
             type: "input_audio",
             input_audio: {
               data: base64,
@@ -98,6 +96,10 @@ function HomeComponent() {
       },
     ]);
   }
+
+  const userMessages = history
+    .filter((item) => item.role === "user")
+    .toReversed();
 
   return (
     <div className="grid grow grid-cols-1 grid-rows-[1fr_auto] items-center justify-items-center">
@@ -125,7 +127,7 @@ function HomeComponent() {
         <div className="relative">
           <Textarea
             autoFocus
-            className="resize-none pr-15 font-mono"
+            className="resize-none bg-card pr-15 font-mono"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -138,31 +140,28 @@ function HomeComponent() {
           </div>
         </div>
         <ol className="flex flex-col gap-2 px-3 font-mono text-sm">
-          {history
-            .filter((item) => item.role === "user")
-            .toReversed()
-            .map((item, index) => {
-              const content = item.content.at(0);
-              if (content?.type === "text") {
-                return (
-                  <Fragment key={content.text}>
-                    <li>{content.text}</li>
-                    {index !== history.length - 1 && <hr />}
-                  </Fragment>
-                );
-              }
-              if (content?.type === "input_audio") {
-                return (
-                  <Fragment key={content.input_audio.data}>
-                    <li>
-                      <audio src={content.input_audio.data} controls />
-                    </li>
-                    {index !== history.length - 1 && <hr />}
-                  </Fragment>
-                );
-              }
-              return null;
-            })}
+          {userMessages.map((item, index) => {
+            const content = item.content.at(0);
+            if (content?.type === "text") {
+              return (
+                <Fragment key={content.text}>
+                  <li>{content.text}</li>
+                  {index !== userMessages.length - 1 && <hr />}
+                </Fragment>
+              );
+            }
+            if (content?.type === "input_audio") {
+              return (
+                <Fragment key={content.input_audio.data}>
+                  <li>
+                    <audio src={content.input_audio.data} controls />
+                  </li>
+                  {index !== userMessages.length - 1 && <hr />}
+                </Fragment>
+              );
+            }
+            return null;
+          })}
         </ol>
       </div>
       <div className="flex items-center justify-center p-4">
