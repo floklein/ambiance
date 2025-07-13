@@ -15,6 +15,7 @@
     "lint": "biome check . --write"
   },
   "dependencies": {
+    "@ambiance/sounds": "workspace:*",
     "@hono/trpc-server": "^0.4.0",
     "@trpc/client": "^11.4.2",
     "@trpc/server": "^11.4.2",

@@ -37,7 +37,7 @@ function HomeComponent() {
       onSuccess: (data) => {
         console.log(data);
         if (data.soundId && audioRef.current) {
-          audioRef.current.src = `${import.meta.env.VITE_SERVER_URL}${sounds[data.soundId].url}`;
+          audioRef.current.src = `https://sounds.tabletopaudio.com/${sounds[data.soundId].mp3}`;
           audioRef.current.load();
           audioRef.current.play();
         }
@@ -89,7 +89,9 @@ function HomeComponent() {
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
-              askAi({ message });
+              askAi({
+                messages: [...history.map((item) => item.message), message],
+              });
             }
           }}
           maxLength={200}

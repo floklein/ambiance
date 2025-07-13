@@ -9,27 +9,32 @@ const openai = new OpenAI({
 });
 
 const SYSTEM_PROMPT = `
-You are a helpful assistant that can play sounds and change the theme of the website.
-You will be given a message and you will need to pick the sound and theme that best match the message.
-The user can tell a story, or ask directly for a sound and theme.
-Always pick BOTH a sound and a theme, so always call both functions.
-Do not make up any sounds or themes, only choose from the lists.
+You are a helpful assistant that can play sounds and change the Shadcn theme of the website.
+You will be given messages and you will need to pick the sound and Shadcn theme that best match the last message, using the previous messages as context.
+The user can tell a story, or ask directly for a sound and Shadcn theme.
+Always pick BOTH a sound and a Shadcn theme, so always call both functions.
+Do not make up any sounds or Shadcn themes, only choose a sound from the list of sounds and a Shadcn theme from the list of Shadcn themes.
 Do not answer the user's message, do not write any words, only play the sound and change the theme.
 
-Here is a list of sounds to choose from, formatted as "- [soundId] soundName (soundDescription)":
-${Object.entries(sounds)
-  .map(
-    ([soundId, sound]) => `- [${soundId}] ${sound.name} (${sound.description})`,
-  )
-  .join("\n")}
-
-Here is a list of themes to choose from, formatted as "- [themeId] themeName (themeDescription)":
+Here is a list of Shadcn themes to choose from, formatted as "[themeId] themeName (themeDescription)":
+<themes>
 ${Object.entries(themes)
   .map(
-    ([themeId, theme]) =>
-      `- [${themeId}] ${theme.label} (${theme.description})`,
+    ([themeId, theme]) => `[${themeId}] ${theme.label} (${theme.description})`,
   )
   .join("\n")}
+</themes>
+
+Here is a list of sounds to choose from, formatted as "[soundId] soundName (soundDescription)":
+<sounds>
+${Object.entries(sounds)
+  .filter(([_, sound]) => !("disabled" in sound) || !sound.disabled)
+  .map(
+    ([soundId, sound]) =>
+      `[${soundId}] ${sound.title} (${sound.tags.join(", ")})`,
+  )
+  .join("\n")}
+</sounds>
 `;
 
 export const appRouter = router({
@@ -39,7 +44,7 @@ export const appRouter = router({
   askAi: protectedProcedure
     .input(
       z.object({
-        message: z.string(),
+        messages: z.array(z.string()),
       }),
     )
     .mutation(async ({ input }) => {
@@ -57,7 +62,12 @@ export const appRouter = router({
                   properties: {
                     soundId: {
                       type: "string",
-                      enum: Object.keys(sounds),
+                      enum: Object.entries(sounds)
+                        .filter(
+                          ([_, sound]) =>
+                            !("disabled" in sound) || !sound.disabled,
+                        )
+                        .map(([soundId]) => soundId),
                       description: "The ID of the sound to play",
                     },
                   },
@@ -89,7 +99,11 @@ export const appRouter = router({
               role: "system",
               content: SYSTEM_PROMPT,
             },
-            { role: "user", content: input.message },
+            ...input.messages.map((message) => ({
+              role: "user" as const,
+              name: "user",
+              content: message,
+            })),
           ],
         });
         const result: { soundId: SoundId | null; themeId: ThemeId | null } = {
@@ -99,11 +113,19 @@ export const appRouter = router({
         completion.choices[0].message.tool_calls?.forEach((toolCall) => {
           if (toolCall.function.name === "playSound") {
             const { soundId } = JSON.parse(toolCall.function.arguments);
-            result.soundId = soundId;
+            if (!sounds[soundId as SoundId]) {
+              console.error(`Sound ${soundId} not found`);
+            } else {
+              result.soundId = soundId;
+            }
           }
           if (toolCall.function.name === "changeTheme") {
             const { themeId } = JSON.parse(toolCall.function.arguments);
-            result.themeId = themeId;
+            if (!themes[themeId as ThemeId]) {
+              console.error(`Theme ${themeId} not found`);
+            } else {
+              result.themeId = themeId;
+            }
           }
         });
         return result;

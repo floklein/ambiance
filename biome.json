@@ -64,5 +64,13 @@
     "formatter": {
       "quoteStyle": "double"
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["packages/sounds/src/sounds.ts"],
+      "formatter": {
+        "lineWidth": 320
+      }
+    }
+  ]
 }
