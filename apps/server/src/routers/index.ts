@@ -1,6 +1,11 @@
-import { type SoundId, sounds, type ThemeId, themes } from "@ambiance/sounds";
+import {
+  messagesSchema,
+  type SoundId,
+  sounds,
+  type ThemeId,
+  themes,
+} from "@ambiance/sounds";
 import OpenAI from "openai";
-import { z } from "zod";
 import { protectedProcedure, publicProcedure, router } from "../lib/trpc";
 
 const openai = new OpenAI({
@@ -42,11 +47,7 @@ export const appRouter = router({
     return "OK";
   }),
   askAi: protectedProcedure
-    .input(
-      z.object({
-        messages: z.array(z.string()),
-      }),
-    )
+    .input(messagesSchema)
     .mutation(async ({ input }) => {
       const completion = await openai.chat.completions.create({
         model: "mistralai/mistral-small-3.2-24b-instruct",
@@ -98,11 +99,7 @@ export const appRouter = router({
             role: "system",
             content: SYSTEM_PROMPT,
           },
-          ...input.messages.map((message) => ({
-            role: "user" as const,
-            name: "user",
-            content: message,
-          })),
+          ...input,
         ],
       });
       const result: { soundId: SoundId | null; themeId: ThemeId | null } = {
@@ -127,7 +124,7 @@ export const appRouter = router({
           }
         }
       });
-      return result;
+      return { ...result, message: completion.choices[0].message };
     }),
 });
 
