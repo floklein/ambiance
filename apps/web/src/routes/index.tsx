@@ -104,7 +104,7 @@ function HomeComponent() {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
               askAi({
-                messages: [...history.map((item) => item.message), message],
+                messages: [message],
               });
             }
           }}
@@ -127,6 +127,7 @@ function HomeComponent() {
           ref={audioRef}
           controls
           controlsList="nodownload"
+          loop
           className={cn(isPending && "hidden")}
         />
       </div>

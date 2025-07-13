@@ -1656,6 +1656,7 @@ export const sounds = {
     title: "Sand Raiders",
     mp3: "307_Sand_Raiders.mp3",
     tags: ["Star Wars", "Tusken Raiders", "Tatooine", "desert", "battle", "action", "combat"],
+    disabled: true,
   },
   song_308: {
     title: "Skullwharf",

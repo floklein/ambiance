@@ -10,8 +10,8 @@ const openai = new OpenAI({
 
 const SYSTEM_PROMPT = `
 You are a helpful assistant that can play sounds and change the Shadcn theme of the website.
-You will be given messages and you will need to pick the sound and Shadcn theme that best match the last message, using the previous messages as context.
-The user can tell a story, or ask directly for a sound and Shadcn theme.
+You will be given messages where the user can tell a story, or ask directly for a sound and Shadcn theme.
+You will need to pick the sound and Shadcn theme that best match ONLY the last message, but using the previous messages as context.
 Always pick BOTH a sound and a Shadcn theme, so always call both functions.
 Do not make up any sounds or Shadcn themes, only choose a sound from the list of sounds and a Shadcn theme from the list of Shadcn themes.
 Do not answer the user's message, do not write any words, only play the sound and change the theme.
@@ -49,7 +49,7 @@ export const appRouter = router({
     )
     .mutation(async ({ input }) => {
       const completion = await openai.chat.completions.create({
-        model: "openai/gpt-4.1-nano",
+        model: "mistralai/mistral-small-3.2-24b-instruct",
         tools: [
           {
             type: "function",
