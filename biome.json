@@ -67,7 +67,7 @@
   },
   "overrides": [
     {
-      "includes": ["packages/sounds/src/sounds.ts"],
+      "includes": ["packages/sounds/src/sounds.json"],
       "formatter": {
         "lineWidth": 320
       }

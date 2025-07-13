@@ -114,7 +114,7 @@ export const appRouter = router({
           if (toolCall.function.name === "playSound") {
             const { soundId } = JSON.parse(toolCall.function.arguments);
             const sound = sounds[soundId as SoundId];
-            if (!sound || ("disabled" in sound && sound.disabled)) {
+            if (!sound || sound.disabled) {
               console.error(`Sound ${soundId} not found`);
             } else {
               result.soundId = soundId;
