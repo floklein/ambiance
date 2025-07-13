@@ -129,7 +129,7 @@
     "title": "Down by the Sea",
     "mp3": "36_Down_by_the_Sea.mp3",
     "tags": ["water", "ocean", "beach", "gulls", "birds", "sand", "dunes", "surf", "wind", "breeze"],
-    "disabled": false
+    "disabled": true
   },
   "song_38": {
     "title": "Into the Deep",
@@ -273,7 +273,7 @@
     "title": "Medieval Library",
     "mp3": "73_Medieval_Library.mp3",
     "tags": ["books", "quills", "scholars", "study", "peaceful", "quiet", "pages", "arcane"],
-    "disabled": false
+    "disabled": true
   },
   "song_74": {
     "title": "Zombies!",
@@ -459,7 +459,7 @@
     "title": "Russian Winter",
     "mp3": "130_Russian_Winter.mp3",
     "tags": ["snow", "ice", "slavic", "cold", "wind", "north", "barren"],
-    "disabled": false
+    "disabled": true
   },
   "song_131": {
     "title": "The Bog Standard",
@@ -567,7 +567,7 @@
     "title": "Fishing Village",
     "mp3": "167_Fishing_Village.mp3",
     "tags": ["ocean", "sea", "boats", "town", "medieval", "Saltmarsh", "docks", "water", "peaceful"],
-    "disabled": false
+    "disabled": true
   },
   "song_168": {
     "title": "Neon Drive",
@@ -585,7 +585,7 @@
     "title": "Cry Havoc",
     "mp3": "171_Cry_Havoc.mp3",
     "tags": ["battle", "drama", "action", "fight", "clash", "medieval", "epic", "heroic", "combat"],
-    "disabled": true
+    "disabled": false
   },
   "song_173": {
     "title": "Robotics Lab",
@@ -633,7 +633,7 @@
     "title": "Gravity",
     "mp3": "185_Gravity.mp3",
     "tags": ["space", "orbit", "tension", "ominous", "drama", "action", "cyberpunk"],
-    "disabled": false
+    "disabled": true
   },
   "song_186": {
     "title": "Haunted",
@@ -807,7 +807,7 @@
     "title": "Training Grounds",
     "mp3": "237_Training_Grounds.mp3",
     "tags": ["swords", "fight", "spar", "battle", "melee", "clash", "skirmish", "action", "castle", "combat"],
-    "disabled": true
+    "disabled": false
   },
   "song_238": {
     "title": "Mind Flayer Chamber",
@@ -969,7 +969,7 @@
     "title": "High Rannoc Village",
     "mp3": "285_High_Rannoc_Village.mp3",
     "tags": ["Apothecaria", "town", "village", "mountain"],
-    "disabled": true
+    "disabled": false
   },
   "song_286": {
     "title": "Blastfire Bog",
@@ -1023,7 +1023,7 @@
     "title": "Gateway to Hell",
     "mp3": "298_Gateway_to_Hell.mp3",
     "tags": ["volcano", "crater", "fire", "fiery", "evil", "hades", "underworld", "brimstone"],
-    "disabled": false
+    "disabled": true
   },
   "song_300": {
     "title": "Burn Maneuver",
@@ -1173,7 +1173,7 @@
     "title": "Halfling Lodge",
     "mp3": "351_Halfling_Lodge.mp3",
     "tags": ["tavern", "inn", "hobbits", "tolkien", "happy", "festive", "party"],
-    "disabled": false
+    "disabled": true
   },
   "song_352": {
     "title": "Black Rider",
@@ -1539,7 +1539,7 @@
     "title": "Hotel Noir",
     "mp3": "431_Hotel_Noir.mp3",
     "tags": ["1940s", "1930s", "Cthulhu", "jazz", "city", "detective", "mystery", "spy", "espionage"],
-    "disabled": false
+    "disabled": true
   },
   "song_432": {
     "title": "Lair of the Wyrm",
