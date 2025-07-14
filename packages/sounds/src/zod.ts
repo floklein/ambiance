@@ -48,3 +48,4 @@ export const messagesSchema = z.array(
   z.union([userMessageSchema, assistantMessageSchema, toolMessageSchema]),
 );
 export type Messages = z.infer<typeof messagesSchema>;
+export type Message = Messages[number];

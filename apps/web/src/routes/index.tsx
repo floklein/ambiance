@@ -82,10 +82,6 @@ function HomeComponent() {
         role: "user",
         content: [
           {
-            type: "text",
-            text: "Use this audio file to pick the sound and UI theme.",
-          },
-          {
             type: "input_audio",
             input_audio: {
               data: base64,

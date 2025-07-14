@@ -1,4 +1,5 @@
 import {
+  type Message,
   type Messages,
   messagesSchema,
   type SoundId,
@@ -10,6 +11,10 @@ import OpenAI from "openai";
 import { protectedProcedure, publicProcedure, router } from "../lib/trpc";
 
 const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+const openrouter = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
   apiKey: process.env.OPENROUTER_API_KEY,
 });
@@ -23,24 +28,21 @@ Always pick BOTH a sound and a UI theme, so always call both functions.
 Do not make up any sounds or UI themes, only choose a sound from the list of sounds and a UI theme from the list of UI themes.
 Do not answer the user's message, do not write any words, only play the sound and change the UI theme.
 
-Here is a list of UI themes to choose from, formatted as "[themeId] themeName (themeDescription)":
-<themes>
+Here is a list of UI themes to choose from, formatted as "- [themeId] themeName (themeDescription)":
 ${Object.entries(themes)
   .map(
-    ([themeId, theme]) => `[${themeId}] ${theme.label} (${theme.description})`,
+    ([themeId, theme]) =>
+      `- [${themeId}] ${theme.label} (${theme.description})`,
   )
   .join("\n")}
-</themes>
 
-Here is a list of sounds to choose from, formatted as "[soundId] soundName (soundDescription)":
-<sounds>
+Here is a list of sounds to choose from, formatted as "- [soundId] soundName (soundDescription)":
 ${Object.entries(sounds)
   .map(
     ([soundId, sound]) =>
-      `[${soundId}] ${sound.title} (${sound.tags.join(", ")})`,
+      `- [${soundId}] ${sound.title} (${sound.tags.join(", ")})`,
   )
   .join("\n")}
-</sounds>
 `;
 
 export const appRouter = router({
@@ -51,8 +53,41 @@ export const appRouter = router({
     .input(messagesSchema)
     .mutation(async ({ input }) => {
       try {
-        console.log(JSON.stringify(input, null, 2));
-        const completion = await openai.chat.completions.create({
+        const messages = await Promise.all(
+          input.map<Promise<Message>>(async (message) => {
+            if (message.role !== "user") {
+              return message;
+            }
+            return {
+              ...message,
+              content: await Promise.all(
+                message.content.map(async (part) => {
+                  if (part.type !== "input_audio") {
+                    return part;
+                  }
+                  const base64Data =
+                    part.input_audio.data.split(",")[1] ||
+                    part.input_audio.data;
+                  console.log(base64Data.slice(0, 10));
+                  const binaryData = Buffer.from(base64Data, "base64");
+                  const file = new File([binaryData], "audio.wav", {
+                    type: "audio/wav",
+                  });
+                  const audio = await openai.audio.transcriptions.create({
+                    file,
+                    model: "whisper-1",
+                  });
+                  return {
+                    type: "text" as const,
+                    text: audio.text,
+                  };
+                }),
+              ),
+            };
+          }),
+        );
+        console.log(JSON.stringify(messages, null, 2));
+        const completion = await openrouter.chat.completions.create({
           model: "mistralai/mistral-small-3.2-24b-instruct",
           tools: [
             {
@@ -98,7 +133,7 @@ export const appRouter = router({
               role: "system",
               content: SYSTEM_PROMPT,
             },
-            ...input,
+            ...messages,
           ],
         });
         const result: {
