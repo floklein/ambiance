@@ -20,7 +20,7 @@ export default function UserMenu() {
   const { theme, setTheme } = useTheme();
   const { data: session, isPending } = authClient.useSession();
 
-  if (isPending || !session?.user) {
+  if (isPending || !session) {
     return null;
   }
 
