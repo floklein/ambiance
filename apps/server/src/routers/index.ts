@@ -7,11 +7,16 @@ import {
   type ThemeId,
   themes,
 } from "@ambiance/sounds";
+import {
+  createPartFromBase64,
+  createUserContent,
+  GoogleGenAI,
+} from "@google/genai";
 import OpenAI from "openai";
 import { protectedProcedure, publicProcedure, router } from "../lib/trpc";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const googleai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 const openrouter = new OpenAI({
@@ -68,18 +73,16 @@ export const appRouter = router({
                   const base64Data =
                     part.input_audio.data.split(",")[1] ||
                     part.input_audio.data;
-                  console.log(base64Data.slice(0, 10));
-                  const binaryData = Buffer.from(base64Data, "base64");
-                  const file = new File([binaryData], "audio.wav", {
-                    type: "audio/wav",
-                  });
-                  const audio = await openai.audio.transcriptions.create({
-                    file,
-                    model: "whisper-1",
+                  const audio = await googleai.models.generateContent({
+                    model: "gemini-2.5-flash-lite-preview-06-17",
+                    contents: createUserContent([
+                      createPartFromBase64(base64Data, "audio/wav"),
+                      "Generate a transcript of the speech.",
+                    ]),
                   });
                   return {
                     type: "text" as const,
-                    text: audio.text,
+                    text: audio.text ?? "",
                   };
                 }),
               ),
@@ -143,7 +146,7 @@ export const appRouter = router({
         } = {
           soundId: null,
           themeId: null,
-          history: [...input, completion.choices[0].message],
+          history: [...messages, completion.choices[0].message],
         };
         completion.choices[0].message.tool_calls?.forEach((toolCall) => {
           if (toolCall.function.name === "playSound") {
