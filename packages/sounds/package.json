@@ -21,6 +21,7 @@
     }
   },
   "dependencies": {
+    "@google/genai": "^1.9.0",
     "zod": "^4.0.5"
   }
 }

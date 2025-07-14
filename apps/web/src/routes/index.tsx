@@ -1,4 +1,4 @@
-import { type Messages, sounds, type ThemeId, themes } from "@ambiance/sounds";
+import { type Contents, sounds, type ThemeId, themes } from "@ambiance/sounds";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Fragment, useRef, useState } from "react";
@@ -26,15 +26,15 @@ export const Route = createFileRoute("/")({
 function HomeComponent() {
   const [message, setMessage] = useState("");
   const [theme, setTheme] = useState<ThemeId | null>(null);
-  const [history, setHistory] = useState<Messages>([]);
+  const [history, setHistory] = useState<Contents>([]);
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const { mutate: askAi, isPending } = useMutation(
     trpc.askAi.mutationOptions({
       onSuccess: (data) => {
-        setHistory(data.history);
-        console.log(data.history);
+        setHistory(data.contents);
+        console.log(data.contents);
         if (data.soundId && audioRef.current) {
           console.log("Sound:", sounds[data.soundId].title);
           audioRef.current.src = `https://sounds.tabletopaudio.com/${sounds[data.soundId].mp3}`;
@@ -67,28 +67,22 @@ function HomeComponent() {
       askAi([
         ...history,
         {
+          id: crypto.randomUUID(),
           role: "user",
-          content: [{ type: "text", text: message }],
+          parts: [{ text: message }],
         },
       ]);
     }
   }
 
   async function handleRecord(blob: Blob) {
-    const base64 = await blobToBase64(blob);
+    const base64 = (await blobToBase64(blob)).split(",")[1] ?? "";
     askAi([
       ...history,
       {
+        id: crypto.randomUUID(),
         role: "user",
-        content: [
-          {
-            type: "input_audio",
-            input_audio: {
-              data: base64,
-              format: "wav",
-            },
-          },
-        ],
+        parts: [{ inlineData: { data: base64, mimeType: "audio/wav" } }],
       },
     ]);
   }
@@ -137,26 +131,18 @@ function HomeComponent() {
         </div>
         <ol className="flex flex-col gap-2 px-3 font-mono text-sm">
           {userMessages.map((item, index) => {
-            const content = item.content.at(0);
-            if (content?.type === "text") {
-              return (
-                <Fragment key={content.text}>
-                  <li>{content.text}</li>
-                  {index !== userMessages.length - 1 && <hr />}
-                </Fragment>
-              );
-            }
-            if (content?.type === "input_audio") {
-              return (
-                <Fragment key={content.input_audio.data}>
-                  <li>
-                    <audio src={content.input_audio.data} controls />
-                  </li>
-                  {index !== userMessages.length - 1 && <hr />}
-                </Fragment>
-              );
-            }
-            return null;
+            const part = item.parts.at(0);
+            return (
+              <Fragment key={item.id}>
+                <li>
+                  {part?.inlineData && (
+                    <span className="italic">Transcribing...</span>
+                  )}
+                  {part?.text}
+                </li>
+                {index !== userMessages.length - 1 && <hr />}
+              </Fragment>
+            );
           })}
         </ol>
       </div>

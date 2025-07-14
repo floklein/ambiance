@@ -1,51 +1,31 @@
 import { z } from "zod";
 
-export const userMessageSchema = z.object({
-  role: z.literal("user"),
-  content: z.array(
-    z.union([
-      z.object({
-        type: z.literal("text"),
-        text: z.string(),
-      }),
-      z.object({
-        type: z.literal("input_audio"),
-        input_audio: z.object({
-          data: z.string(),
-          format: z.enum(["wav", "mp3"]),
-        }),
-      }),
-    ]),
-  ),
-});
-export type UserMessage = z.infer<typeof userMessageSchema>;
-
-export const assistantMessageSchema = z.object({
-  role: z.literal("assistant"),
-  tool_calls: z
-    .array(
-      z.object({
-        type: z.literal("function"),
-        id: z.string(),
-        function: z.object({
-          name: z.string(),
-          arguments: z.string(),
-        }),
-      }),
-    )
+const partSchema = z.object({
+  text: z.string().optional(),
+  inlineData: z
+    .object({
+      data: z.string(),
+      mimeType: z.string(),
+    })
     .optional(),
 });
-export type AssistantMessage = z.infer<typeof assistantMessageSchema>;
 
-export const toolMessageSchema = z.object({
-  role: z.literal("tool"),
-  tool_call_id: z.string(),
-  content: z.string(),
+export const userContentSchema = z.object({
+  id: z.string(),
+  role: z.literal("user"),
+  parts: z.array(partSchema),
 });
-export type ToolMessage = z.infer<typeof toolMessageSchema>;
+export type UserContent = z.infer<typeof userContentSchema>;
 
-export const messagesSchema = z.array(
-  z.union([userMessageSchema, assistantMessageSchema, toolMessageSchema]),
-);
-export type Messages = z.infer<typeof messagesSchema>;
-export type Message = Messages[number];
+export const modelContentSchema = z.object({
+  id: z.string(),
+  role: z.literal("model"),
+  parts: z.array(partSchema),
+});
+export type ModelContent = z.infer<typeof modelContentSchema>;
+
+export const contentSchema = z.union([userContentSchema, modelContentSchema]);
+export type Content = z.infer<typeof contentSchema>;
+
+export const contentsSchema = z.array(contentSchema);
+export type Contents = z.infer<typeof contentsSchema>;

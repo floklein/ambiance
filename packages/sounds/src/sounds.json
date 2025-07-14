@@ -15,7 +15,7 @@
     "title": "Desert Bazaar",
     "mp3": "5_Desert_Bazaar.mp3",
     "tags": ["arabian", "dune", "market", "suspense", "alien", "magic", "Voyages of Marco Polo"],
-    "disabled": false
+    "disabled": true
   },
   "song_8": {
     "title": "Dust to Dust",
@@ -51,7 +51,7 @@
     "title": "Derelict Freighter",
     "mp3": "21_Derelict_Freighter.mp3",
     "tags": ["spaceship", "salvage", "space opera", "reavers", "Level 7", "Theseus", "Legendary Encounters"],
-    "disabled": false
+    "disabled": true
   },
   "song_22": {
     "title": "True West",
@@ -75,7 +75,7 @@
     "title": "Uncommon Valor",
     "mp3": "26_Uncommon_Valor_a.mp3",
     "tags": ["war", "combat", "wwii", "wwi", "tanks", "infantry", "trenches", "Memoir 44", "Heroes of Normandie"],
-    "disabled": false
+    "disabled": true
   },
   "song_27": {
     "title": "Xingu Nights",
@@ -111,7 +111,7 @@
     "title": "Far Above the World",
     "mp3": "33_Far_Above_the_World.mp3",
     "tags": ["space", "outerspace", "quiet", "dark", "astronaut", "spacewalk"],
-    "disabled": false
+    "disabled": true
   },
   "song_34": {
     "title": "Clash of Kings",
@@ -123,13 +123,13 @@
     "title": "Swamplandia",
     "mp3": "35_Swamplandia.mp3",
     "tags": ["swamp", "jungle", "insects", "water", "humid", "sticky"],
-    "disabled": false
+    "disabled": true
   },
   "song_36": {
     "title": "Down by the Sea",
     "mp3": "36_Down_by_the_Sea.mp3",
     "tags": ["water", "ocean", "beach", "gulls", "birds", "sand", "dunes", "surf", "wind", "breeze"],
-    "disabled": true
+    "disabled": false
   },
   "song_38": {
     "title": "Into the Deep",
@@ -189,7 +189,7 @@
     "title": "Overland with Oxen",
     "mp3": "48_Overland_with_Oxen.mp3",
     "tags": ["ox", "cart", "wagon", "travel", "horses"],
-    "disabled": false
+    "disabled": true
   },
   "song_49": {
     "title": "Goblin's Cave",
@@ -315,7 +315,7 @@
     "title": "Sewers",
     "mp3": "85_Sewers.mp3",
     "tags": ["dark", "dank", "dripping", "tunnel", "sewars", "quest", "dungeon", "water", "underground"],
-    "disabled": false
+    "disabled": true
   },
   "song_86": {
     "title": "Dark City",
@@ -567,7 +567,7 @@
     "title": "Fishing Village",
     "mp3": "167_Fishing_Village.mp3",
     "tags": ["ocean", "sea", "boats", "town", "medieval", "Saltmarsh", "docks", "water", "peaceful"],
-    "disabled": true
+    "disabled": false
   },
   "song_168": {
     "title": "Neon Drive",
@@ -627,7 +627,7 @@
     "title": "Country Village",
     "mp3": "182_Country_Village.mp3",
     "tags": ["rural", "town", "medieval", "peaceful", "farm"],
-    "disabled": true
+    "disabled": false
   },
   "song_185": {
     "title": "Gravity",
@@ -639,7 +639,7 @@
     "title": "Haunted",
     "mp3": "186_Haunted.mp3",
     "tags": ["scary", "eerie", "halloween", "ghosts", "spooky", "graveyard", "monsters"],
-    "disabled": false
+    "disabled": true
   },
   "song_187": {
     "title": "Endgame",
@@ -771,7 +771,7 @@
     "title": "Terror in the Woods",
     "mp3": "227_Terror_in_the_Woods.mp3",
     "tags": ["lovecraft", "action", "chase", "tension", "monsters", "battle", "combat"],
-    "disabled": false
+    "disabled": true
   },
   "song_229": {
     "title": "Interrogation Room",
@@ -813,7 +813,7 @@
     "title": "Mind Flayer Chamber",
     "mp3": "238_Mind_Flayer_Chamber.mp3",
     "tags": ["illithid", "dungeon", "suspense", "brain", "elder brain", "action"],
-    "disabled": false
+    "disabled": true
   },
   "song_239": {
     "title": "Nordic Noir",
@@ -969,7 +969,7 @@
     "title": "High Rannoc Village",
     "mp3": "285_High_Rannoc_Village.mp3",
     "tags": ["Apothecaria", "town", "village", "mountain"],
-    "disabled": false
+    "disabled": true
   },
   "song_286": {
     "title": "Blastfire Bog",
@@ -981,7 +981,7 @@
     "title": "Everdeep",
     "mp3": "288_Everdeep.mp3",
     "tags": ["ocean", "sea", "underwater", "Netherdeep", "depths", "water", "abyss"],
-    "disabled": false
+    "disabled": true
   },
   "song_289": {
     "title": "Ancient Artifact",
@@ -993,7 +993,7 @@
     "title": "Wagon Ride",
     "mp3": "290_Wagon_Ride.mp3",
     "tags": ["horse", "carriage", "cart", "oxen", "ox", "oxcart", "travel", "drama", "Skyrim"],
-    "disabled": false
+    "disabled": true
   },
   "song_292": {
     "title": "Bleakwater Docks",
@@ -1011,7 +1011,7 @@
     "title": "Cutpurse Pursuit",
     "mp3": "294_Cutpurse_Pursuit.mp3",
     "tags": ["medieval", "town", "city", "alley", "urban", "chase", "Witcher"],
-    "disabled": false
+    "disabled": true
   },
   "song_296": {
     "title": "The Frozen Trail",
@@ -1023,7 +1023,7 @@
     "title": "Gateway to Hell",
     "mp3": "298_Gateway_to_Hell.mp3",
     "tags": ["volcano", "crater", "fire", "fiery", "evil", "hades", "underworld", "brimstone"],
-    "disabled": true
+    "disabled": false
   },
   "song_300": {
     "title": "Burn Maneuver",
@@ -1173,7 +1173,7 @@
     "title": "Halfling Lodge",
     "mp3": "351_Halfling_Lodge.mp3",
     "tags": ["tavern", "inn", "hobbits", "tolkien", "happy", "festive", "party"],
-    "disabled": true
+    "disabled": false
   },
   "song_352": {
     "title": "Black Rider",
@@ -1197,7 +1197,7 @@
     "title": "Hydroponics Bay",
     "mp3": "355_Hydroponics_Bay.mp3",
     "tags": ["starship", "Star Trek", "Enterprise", "vines", "technology", "botany", "garden"],
-    "disabled": false
+    "disabled": true
   },
   "song_356": {
     "title": "Adventure Begins",
@@ -1209,7 +1209,7 @@
     "title": "Skull Island",
     "mp3": "359_Skull_Island.mp3",
     "tags": ["ocean", "adventure", "drama", "ship", "shipwreck", "tribal", "jungle", "King Kong", "Kong"],
-    "disabled": false
+    "disabled": true
   },
   "song_360": {
     "title": "Pit Fighter",
@@ -1293,7 +1293,7 @@
     "title": "The Great Lift",
     "mp3": "380_The_Great_Lift.mp3",
     "tags": ["machine", "mechanical", "steampunk", "engine", "gears", "clifftop", "elevator", "mountain"],
-    "disabled": false
+    "disabled": true
   },
   "song_381": {
     "title": "Halfling Sneak",
@@ -1533,7 +1533,7 @@
     "title": "Fire Dance",
     "mp3": "430_Fire_Dance.mp3",
     "tags": ["pagan", "ritual", "jungle", "forest", "tribal", "drums", "chant"],
-    "disabled": true
+    "disabled": false
   },
   "song_431": {
     "title": "Hotel Noir",
