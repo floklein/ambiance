@@ -98,7 +98,7 @@ function HomeComponent() {
       activeAudioRef === 1 ? audioRef1.current : audioRef2.current;
     const nextRef =
       activeAudioRef === 1 ? audioRef2.current : audioRef1.current;
-    if (!nextRef) return;
+    if (!currentRef || !nextRef) return;
     nextRef.src = nextSrc;
     nextRef.volume = 0;
     nextRef.load();
@@ -110,18 +110,18 @@ function HomeComponent() {
       step++;
       const progress = step / FADE_STEPS;
       nextRef.volume = progress;
-      if (currentRef && !currentRef.paused) {
+      if (!currentRef.paused) {
         currentRef.volume = 1 - progress;
       }
       if (step >= FADE_STEPS) {
         if (fadeIntervalRef.current) {
           clearInterval(fadeIntervalRef.current);
         }
-        if (currentRef && !currentRef.paused) {
+        nextRef.volume = 1;
+        if (!currentRef.paused) {
           currentRef.pause();
           currentRef.volume = 1;
         }
-        nextRef.volume = 1;
       }
     }, stepDuration);
   }
