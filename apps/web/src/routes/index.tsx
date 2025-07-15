@@ -34,7 +34,7 @@ function HomeComponent() {
     trpc.askAi.mutationOptions({
       onSuccess: (data) => {
         setHistory(data.contents);
-        console.log(data.contents);
+        console.log("Contents:", data.contents);
         if (data.soundId && audioRef.current) {
           console.log("Sound:", sounds[data.soundId].title);
           audioRef.current.src = `https://sounds.tabletopaudio.com/${sounds[data.soundId].mp3}`;

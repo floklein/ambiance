@@ -81,7 +81,6 @@ export const appRouter = router({
             transcript: z.string().optional(),
           })
           .parse(JSON.parse(response.text ?? "{}"));
-        console.log("json", json);
         const contents: Contents = [
           ...input.slice(0, -1),
           {
