@@ -11,7 +11,7 @@
     "apps/server": {
       "name": "server",
       "dependencies": {
-        "@ambiance/sounds": "workspace:*",
+        "@ambiance/shared": "workspace:*",
         "@google/genai": "^1.9.0",
         "@hono/trpc-server": "^0.4.0",
         "@trpc/client": "^11.4.2",
@@ -35,7 +35,7 @@
       "name": "web",
       "version": "0.0.0",
       "dependencies": {
-        "@ambiance/sounds": "workspace:*",
+        "@ambiance/shared": "workspace:*",
         "@hookform/resolvers": "^5.1.1",
         "@radix-ui/react-avatar": "^1.1.10",
         "@radix-ui/react-tooltip": "^1.2.7",
@@ -72,8 +72,8 @@
         "vite": "^6.2.2",
       },
     },
-    "packages/sounds": {
-      "name": "@ambiance/sounds",
+    "packages/shared": {
+      "name": "@ambiance/shared",
       "version": "0.0.0",
       "dependencies": {
         "@google/genai": "^1.9.0",
@@ -85,7 +85,7 @@
     },
   },
   "packages": {
-    "@ambiance/sounds": ["@ambiance/sounds@workspace:packages/sounds"],
+    "@ambiance/shared": ["@ambiance/shared@workspace:packages/shared"],
 
     "@ampproject/remapping": ["@ampproject/remapping@2.3.0", "", { "dependencies": { "@jridgewell/gen-mapping": "^0.3.5", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw=="],
 

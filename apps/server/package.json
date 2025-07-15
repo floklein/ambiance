@@ -15,7 +15,7 @@
     "lint": "biome check . --write"
   },
   "dependencies": {
-    "@ambiance/sounds": "workspace:*",
+    "@ambiance/shared": "workspace:*",
     "@google/genai": "^1.9.0",
     "@hono/trpc-server": "^0.4.0",
     "@trpc/client": "^11.4.2",

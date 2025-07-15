@@ -1,4 +1,4 @@
-import { type Contents, sounds, type ThemeId, themes } from "@ambiance/sounds";
+import { type Contents, sounds, type ThemeId, themes } from "@ambiance/shared";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Fragment, useRef, useState } from "react";

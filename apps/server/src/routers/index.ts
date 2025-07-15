@@ -1,3 +1,5 @@
+import { GoogleGenAI, Type } from "@google/genai";
+import { z } from "zod";
 import {
   type Contents,
   contentsSchema,
@@ -5,9 +7,7 @@ import {
   sounds,
   type ThemeId,
   themes,
-} from "@ambiance/sounds";
-import { GoogleGenAI, Type } from "@google/genai";
-import { z } from "zod";
+} from "../../../../packages/shared/dist";
 import { protectedProcedure, publicProcedure, router } from "../lib/trpc";
 
 const googleai = new GoogleGenAI({
@@ -99,8 +99,10 @@ export const appRouter = router({
             parts: [{ text: response.text }],
           },
         ];
-        const soundId = sounds[json.soundId] ? (json.soundId as SoundId) : null;
-        const themeId = themes[json.themeId as ThemeId]
+        const soundId: SoundId | null = sounds[json.soundId as SoundId]
+          ? (json.soundId as SoundId)
+          : null;
+        const themeId: ThemeId | null = themes[json.themeId as ThemeId]
           ? (json.themeId as ThemeId)
           : null;
         return {
