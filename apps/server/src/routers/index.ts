@@ -1,5 +1,3 @@
-import { GoogleGenAI, Type } from "@google/genai";
-import { z } from "zod";
 import {
   type Contents,
   contentsSchema,
@@ -7,7 +5,9 @@ import {
   sounds,
   type ThemeId,
   themes,
-} from "../../../../packages/shared/dist";
+} from "@ambiance/shared";
+import { GoogleGenAI, Type } from "@google/genai";
+import { z } from "zod";
 import { protectedProcedure, publicProcedure, router } from "../lib/trpc";
 
 const googleai = new GoogleGenAI({
