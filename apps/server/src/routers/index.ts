@@ -8,6 +8,8 @@ import {
 } from "@ambiance/shared";
 import { GoogleGenAI, Type } from "@google/genai";
 import { z } from "zod";
+import { db } from "@/db";
+import { log } from "@/db/schema/logs";
 import { protectedProcedure, publicProcedure, router } from "../lib/trpc";
 
 const googleai = new GoogleGenAI({
@@ -45,7 +47,7 @@ export const appRouter = router({
   }),
   askAi: protectedProcedure
     .input(contentsSchema)
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       try {
         const response = await googleai.models.generateContent({
           model: "gemini-2.5-flash-lite-preview-06-17",
@@ -81,6 +83,13 @@ export const appRouter = router({
             transcript: z.string().optional(),
           })
           .parse(JSON.parse(response.text ?? "{}"));
+        await db.insert(log).values({
+          id: crypto.randomUUID(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          userId: ctx.session.user.id,
+          text: input.at(-1)?.parts.at(0)?.text ?? json.transcript ?? "Error",
+        });
         const contents: Contents = [
           ...input.slice(0, -1),
           {
