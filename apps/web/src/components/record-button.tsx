@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-const RECORDING_MAX_DURATION = 240; // 4 minutes in seconds
+const RECORDING_MAX_DURATION = 60; // 1 minute in seconds
 
 export function RecordButton({
   onRecord,
