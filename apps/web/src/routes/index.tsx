@@ -1,7 +1,7 @@
 import { type Contents, sounds, type ThemeId, themes } from "@ambiance/shared";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { RecordButton } from "@/components/record-button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -23,23 +23,29 @@ export const Route = createFileRoute("/")({
   },
 });
 
+const FADE_DURATION = 5000;
+const FADE_STEPS = 20;
+
 function HomeComponent() {
   const [message, setMessage] = useState("");
   const [theme, setTheme] = useState<ThemeId | null>(null);
   const [history, setHistory] = useState<Contents>([]);
+  const [activeAudioRef, setActiveAudioRef] = useState<1 | 2>(1);
 
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioRef1 = useRef<HTMLAudioElement>(null);
+  const audioRef2 = useRef<HTMLAudioElement>(null);
+  const fadeIntervalRef = useRef<ReturnType<typeof setInterval>>(null);
 
   const { mutate: askAi, isPending } = useMutation(
     trpc.askAi.mutationOptions({
       onSuccess: (data) => {
         setHistory(data.contents);
         console.log("Contents:", data.contents);
-        if (data.soundId && audioRef.current) {
+        if (data.soundId) {
           console.log("Sound:", sounds[data.soundId].title);
-          audioRef.current.src = `https://sounds.tabletopaudio.com/${sounds[data.soundId].mp3}`;
-          audioRef.current.load();
-          audioRef.current.play();
+          crossfade(
+            `https://sounds.tabletopaudio.com/${sounds[data.soundId].mp3}`,
+          );
         }
         if (data.themeId) {
           console.log("Theme:", themes[data.themeId].label);
@@ -86,6 +92,47 @@ function HomeComponent() {
       },
     ]);
   }
+
+  async function crossfade(nextSrc: string) {
+    const currentRef =
+      activeAudioRef === 1 ? audioRef1.current : audioRef2.current;
+    const nextRef =
+      activeAudioRef === 1 ? audioRef2.current : audioRef1.current;
+    if (!nextRef) return;
+    nextRef.src = nextSrc;
+    nextRef.volume = 0;
+    nextRef.load();
+    await nextRef.play();
+    setActiveAudioRef(activeAudioRef === 1 ? 2 : 1);
+    const stepDuration = FADE_DURATION / FADE_STEPS;
+    let step = 0;
+    fadeIntervalRef.current = setInterval(() => {
+      step++;
+      const progress = step / FADE_STEPS;
+      nextRef.volume = progress;
+      if (currentRef && !currentRef.paused) {
+        currentRef.volume = 1 - progress;
+      }
+      if (step >= FADE_STEPS) {
+        if (fadeIntervalRef.current) {
+          clearInterval(fadeIntervalRef.current);
+        }
+        if (currentRef && !currentRef.paused) {
+          currentRef.pause();
+          currentRef.volume = 1;
+        }
+        nextRef.volume = 1;
+      }
+    }, stepDuration);
+  }
+
+  useEffect(() => {
+    return () => {
+      if (fadeIntervalRef.current) {
+        clearInterval(fadeIntervalRef.current);
+      }
+    };
+  }, []);
 
   const userMessages = history
     .filter((item) => item.role === "user")
@@ -149,11 +196,18 @@ function HomeComponent() {
       <div className="flex items-center justify-center p-4">
         {isPending && <Skeleton className="h-[54px] w-[300px] rounded-full" />}
         <audio
-          ref={audioRef}
+          ref={audioRef1}
           controls
           controlsList="nodownload"
           loop
-          className={cn(isPending && "hidden")}
+          className={cn((isPending || activeAudioRef !== 1) && "hidden")}
+        />
+        <audio
+          ref={audioRef2}
+          controls
+          controlsList="nodownload"
+          loop
+          className={cn((isPending || activeAudioRef !== 2) && "hidden")}
         />
       </div>
     </div>
