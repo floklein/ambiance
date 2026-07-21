@@ -6,16 +6,17 @@
     "verbatimModuleSyntax": true,
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
     },
+    "rootDir": "./src",
     "outDir": "./dist",
     "types": ["bun"],
     "composite": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx"
   },
+  "include": ["src"],
   "tsc-alias": {
     "resolveFullPaths": true
   }

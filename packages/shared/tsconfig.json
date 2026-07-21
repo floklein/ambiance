@@ -8,6 +8,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "types": ["bun"],
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
     "outDir": "./dist",
