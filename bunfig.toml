@@ -1,0 +1,4 @@
+[install]
+# Force the hoisted layout everywhere (CI uses a different bun version whose
+# default is isolated, which breaks TypeScript declaration emit portability).
+linker = "hoisted"
