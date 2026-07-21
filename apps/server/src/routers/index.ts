@@ -50,7 +50,7 @@ export const appRouter = router({
     .mutation(async ({ input, ctx }) => {
       try {
         const response = await googleai.models.generateContent({
-          model: "gemini-2.5-flash-lite-preview-06-17",
+          model: "gemini-3.1-flash-lite",
           contents: input,
           config: {
             systemInstruction: SYSTEM_PROMPT,
