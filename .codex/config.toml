@@ -1,0 +1,6 @@
+[plugins."auth-skills@better-auth-agent-skills"]
+enabled = true
+
+[marketplaces.better-auth-agent-skills]
+source_type = "git"
+source = "https://github.com/better-auth/skills.git"

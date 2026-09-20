@@ -1,0 +1,13 @@
+{
+  "enabledPlugins": {
+    "auth-skills@better-auth-agent-skills": true
+  },
+  "extraKnownMarketplaces": {
+    "better-auth-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "better-auth/skills"
+      }
+    }
+  }
+}
